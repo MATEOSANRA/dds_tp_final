@@ -19,6 +19,19 @@ app.use(carnetsfamiliasmockRouter);
 const carnetsfamiliasRouter = require("./routes/carnetsfamilias");
 app.use(carnetsfamiliasRouter);
 
+// controlador ABMC
+const carnetsRouter = require("./routes/carnets");
+app.use(carnetsRouter);
+
+// configurar servidor
+/*
+const cors = require("cors");
+app.use(
+  cors({
+    origin: "*", // origin: 'https://dds-frontend.azurewebsites.net'
+  })
+);
+*/
 
 // levantar servidor
 const port = 3000;
