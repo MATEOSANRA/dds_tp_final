@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../base-orm/sequelize-init");
 const { Op, ValidationError } = require("sequelize");
+const auth = require("../seguridad/auth");
 
 router.get("/api/carnets", async function (req, res, next) {
   // #swagger.tags = ['Carnets']
@@ -173,4 +174,40 @@ router.delete("/api/carnets/:id", async (req, res) => {
     }
   }
 });
+
+//------------------------------------
+//-- SEGURIDAD ---------------------------
+//------------------------------------
+router.get(
+    "/api/carnetsJWT",
+    auth.authenticateJWT,
+    async function (req, res, next) {
+      /* #swagger.security = [{
+                 "bearerAuth1": []
+          }] */
+  
+      // #swagger.tags = ['Articulos']
+      // #swagger.summary = 'obtiene todos los Artículos, con seguridad JWT, solo para rol: admin (usuario:admin, clave:123)'
+      const { permiso } = res.locals.user;
+      if (permiso !== "admin") {
+        return res.status(403).json({ message: "usuario no autorizado!" });
+      }
+  
+      let items = await db.carnets.findAll({
+        attributes: [
+          "IdCarnet",
+          "Nombre",
+          "ValorCuota",
+          "CodigoDeBarra",
+          "IdCarnetFamilia",
+          "FechaAlta",
+          "Activo",
+        ],
+        order: [["Nombre", "ASC"]],
+      });
+      res.json(items);
+    }
+  );
+    
+
 module.exports = router;

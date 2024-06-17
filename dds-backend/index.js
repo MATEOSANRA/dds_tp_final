@@ -33,6 +33,11 @@ app.use(
 );
 */
 
+// seguriad y acceso
+const seguridadRouter = require("./routes/seguridad");
+app.use(seguridadRouter);
+
+
 // levantar servidor
 const port = 3000;
 app.listen(port, () => {
