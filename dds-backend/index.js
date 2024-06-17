@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 
 app.use(express.json()); // para poder leer json en el body
+require("./base-orm/sqlite-init");  // crear base si no existe
 
 // controlar ruta
 app.get("/", (req, res) => {
@@ -13,6 +14,10 @@ app.get("/", (req, res) => {
 // conexion con el mock
 const carnetsfamiliasmockRouter = require("./routes/carnetsfamiliasmock");
 app.use(carnetsfamiliasmockRouter);
+
+// conexion con la BD
+const carnetsfamiliasRouter = require("./routes/carnetsfamilias");
+app.use(carnetsfamiliasRouter);
 
 
 // levantar servidor
