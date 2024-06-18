@@ -1,14 +1,30 @@
 // Define mucho sobre como se consume datos de una BD
+// Ademas, aca se debe definir si nuestra pagina debe tener diferentes paginas
+// la parte de route es para redirijir al inicio
+//Aca se pone el footer
 
 import "./App.css";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import {Inicio} from "./components/Inicio";
 import {CarnetsFamilias} from './components/CarnetsFamilias';
+import {Menu} from "./components/Menu";
+import { Footer } from "./components/Footer";
 function App() {
   return (
     <>
-      <div className="divBody">
-          <CarnetsFamilias/>
-      </div>
+      <BrowserRouter>
+      <Menu />
+        <div className="divBody">
+            <Routes>
+              <Route path="/inicio" element={<Inicio />} />
+              <Route path="/carnetsfamilias" element={<CarnetsFamilias />} />
+              <Route path="*" element={<Navigate to="/Inicio" replace />} />
+            </Routes>
+        </div>
+        <Footer />
+      </BrowserRouter>
     </>
+
   );
 }
 export default App;
