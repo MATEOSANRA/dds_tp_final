@@ -1,14 +1,17 @@
-import {Inicio} from "./components/Inicio";
+// Define mucho sobre como se consume datos de una BD
+
+import "./App.css";
+import {CarnetsFamilias} from './components/CarnetsFamilias';
 function App() {
-return (
+  return (
     <>
-        <Inicio/>
+      <div className="divBody">
+          <CarnetsFamilias/>
+      </div>
     </>
-);
+  );
 }
 export default App;
-
-
 
 
 
