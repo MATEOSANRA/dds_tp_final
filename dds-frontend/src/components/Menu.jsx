@@ -1,4 +1,7 @@
 // Interfaz html para elegir las distintas pantallas / rutas / componentes
+// Aca tmb se conecta lo que va en app
+
+
 import React from "react";
 import { NavLink } from "react-router-dom";
 function Menu() {
@@ -31,6 +34,12 @@ function Menu() {
               Carnets Familias
             </NavLink>
           </li>
+          <li className="nav-item">	
+            <NavLink className="nav-link" to="/carnets">
+               Carnets
+             </NavLink>
+            </li>
+
         </ul>
       </div>
     </nav>

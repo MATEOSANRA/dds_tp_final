@@ -2,6 +2,8 @@
 // Ademas, aca se debe definir si nuestra pagina debe tener diferentes paginas
 // la parte de route es para redirijir al inicio
 //Aca se pone el footer
+// Todo se debe importar aca
+
 
 import "./App.css";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
@@ -9,6 +11,8 @@ import {Inicio} from "./components/Inicio";
 import {CarnetsFamilias} from './components/CarnetsFamilias';
 import {Menu} from "./components/Menu";
 import { Footer } from "./components/Footer";
+import { Carnets } from "./components/carnets/Carnets";
+
 function App() {
   return (
     <>
@@ -19,6 +23,7 @@ function App() {
               <Route path="/inicio" element={<Inicio />} />
               <Route path="/carnetsfamilias" element={<CarnetsFamilias />} />
               <Route path="*" element={<Navigate to="/Inicio" replace />} />
+              <Route path="/carnets" element={<Carnets/>} />
             </Routes>
         </div>
         <Footer />
