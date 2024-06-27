@@ -1,5 +1,8 @@
 import axios from "axios";
 const urlResource = "http://localhost:3000/api/carnets/";
+
+
+
 async function Buscar(Nombre, Activo, Pagina) {
   const resp = await axios.get(urlResource, {
     params: { Nombre, Activo, Pagina },
