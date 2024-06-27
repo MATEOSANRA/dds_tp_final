@@ -1,5 +1,3 @@
-// Los servicios basicamente comunican el html y el servidor en cuanto al envio de datos 
-// ACA SE METE EL ABMC
 import arrayCarnetFamilia from '../datos-mock/carnetsfamilias-mock';
 async function Buscar() {
      return arrayCarnetFamilia;
@@ -26,4 +24,3 @@ async function Eliminar(IdCarnetFamilia){
 export const carnetsFamiliasMockService = {
     Buscar, BuscarPorId, Agregar, Modificar, Eliminar
 };
-

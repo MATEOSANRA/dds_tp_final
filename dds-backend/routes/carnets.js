@@ -20,8 +20,7 @@ router.get("/api/carnets", async function (req, res, next) {
     // convertir el string a booleano
     where.Activo = req.query.Activo === "true";
   }
-  const Pagina = req.query.Pagina ?? 1;
-  const TamañoPagina = 10;
+
   const { count, rows } = await db.carnets.findAndCountAll({
     attributes: [
       "IdCarnet",
@@ -31,9 +30,7 @@ router.get("/api/carnets", async function (req, res, next) {
       "Activo",
     ],
     order: [["Nombre", "ASC"]],
-    where,
-    offset: (Pagina - 1) * TamañoPagina,
-    limit: TamañoPagina,
+
   });
 
   return res.json({ Items: rows, RegistrosTotal: count });

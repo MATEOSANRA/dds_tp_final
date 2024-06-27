@@ -3,7 +3,7 @@ function Footer() {
   return (
     <footer className="text-center">
     <small>
-      <span>© Clubess 2024</span>
+      <span>© Clubes 2024</span>
       <span className="m-4">-</span>
       <a href="tel:113"> <span className="fa fa-phone"></span> 0810-888-1234 </a>
       <span className="m-4">-</span>

@@ -1,7 +1,3 @@
-// Interfaz html para elegir las distintas pantallas / rutas / componentes
-// Aca tmb se conecta lo que va en app
-
-
 import React from "react";
 import { NavLink } from "react-router-dom";
 function Menu() {
@@ -9,7 +5,7 @@ function Menu() {
     <nav className="navbar navbar-dark bg-dark navbar-expand-md">
       <a className="navbar-brand">
         <i className="fa fa-industry"></i>
-        &nbsp;<i>Pymes</i>
+        &nbsp;<i>Clubes</i>
       </a>
       <button
         className="navbar-toggler"
@@ -35,10 +31,10 @@ function Menu() {
             </NavLink>
           </li>
           <li className="nav-item">	
-            <NavLink className="nav-link" to="/carnets">
-               Carnets
-             </NavLink>
-            </li>
+   <NavLink className="nav-link" to="/carnets">
+       Carnets
+   </NavLink>
+</li>
 
         </ul>
       </div>

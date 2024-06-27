@@ -1,10 +1,8 @@
-// Recibe nombre y activo como parametros y dos funciones buscar y agregar, provistas por el componente padre (carnets)
-
 import React from "react";
 export default function CarnetsBuscar ({Nombre, setNombre, Activo, setActivo, Buscar, Agregar}) {
 
     return (
-    <form name="FormBusqueda">
+    <form name="FormBusqueda" onSubmit={(e)=> e.preventDefault()}>
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-4 col-md-2">

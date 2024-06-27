@@ -1,5 +1,3 @@
-// Array usado para pasar a la tabla de carnetsFamilias
-
 const arrayCarnetFamilia = [
     { IdCarnetFamilia: 1, Nombre: "FUTBOL" },
     { IdCarnetFamilia: 2, Nombre: "BASKET" },

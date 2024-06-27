@@ -3,7 +3,10 @@ import moment from "moment";
 import CarnetsBuscar from "./CarnetsBuscar";
 import CarnetsListado from "./CarnetsListado";
 import CarnetsRegistro from "./CarnetsRegistro";
-import { carnetsFamiliasMockService as carnetsFamiliasService } from "../../services/carnetsFamilias-mock.service";
+//import { carnetsFamiliasMockService as carnetsFamiliasService } from "../../services/carnetsFamilias-mock.service";
+import { carnetsService } from "../../services/carnets.service";
+import { carnetsFamiliasService } from "../../services/carnetsFamilias.service";
+
 
 function Carnets() {
   const TituloAccionABMC = {
@@ -33,44 +36,39 @@ function Carnets() {
       setCarnetsFamilias(data);
     }
     BuscarCarnetsFamilas();
+    return () => {
+      //console.log("unmounting Carnets");
+    };
   }, []);
 
-async function Buscar() {
-    setAccionABMC("L");
-    // harcodeamos 2 carnets para probar
-    setItems([
-      {
-        IdCarnet: 108,
-        Nombre: "Vanessa rubio",
-        ValorCuota: 219.0,
-        CodigoDeBarra: "AA000ET",
-        IdCarnetFamilia: 9,
-        FechaAlta: "2017-01-23T00:00:00",
-        Activo: false,
-      },
-      {
-        IdCarnet: 139,
-        Nombre: "Marcos Lopez",
-        ValorCuota: 5899.0,
-        CodigoDeBarra: "AD238OU",
-        IdCarnetFamilia: 7,
-        FechaAlta: "2017-01-04T00:00:00",
-        Activo: true,
-      },
-    ]);
-    alert("Buscando...");
+  async function Buscar(_pagina) {
+    if (_pagina && _pagina !== Pagina) {
+      setPagina(_pagina);
+    }
+    // OJO Pagina (y cualquier estado...) se actualiza para el proximo render, para buscar usamos el parametro _pagina
+    else {
+      _pagina = Pagina;
+    }
+
+    const data = await carnetsService.Buscar(Nombre, Activo, _pagina);
+    setItems(data.Items);
+    setRegistrosTotal(data.RegistrosTotal);
+
+    //generar array de las páginas para mostrar en select del paginador
+    const arrPaginas = [];
+    for (let i = 1; i <= Math.ceil(data.RegistrosTotal / 10); i++) {
+      arrPaginas.push(i);
+    }
+    setPaginas(arrPaginas);
   }
 
+
   async function BuscarPorId(item, accionABMC) {
+    const data = await carnetsService.BuscarPorId(item);
+    setItem(data);
     setAccionABMC(accionABMC);
-    setItem(item);
-    if (accionABMC === "C") {
-      alert("Consultando...");
-    }
-    if (accionABMC === "M") {
-      alert("Modificando...");
-    }
   }
+  
 
   function Consultar(item) {
     BuscarPorId(item, "C"); // paso la accionABMC pq es asincrono la busqueda y luego de ejecutarse quiero cambiar el estado accionABMC
@@ -86,43 +84,60 @@ async function Buscar() {
   async function Agregar() {
     setAccionABMC("A");
     setItem({
-        IdCarnet: 0,
+        IdArticulo: 0,
         Nombre: '',
-        ValorCuota: '',
+        Precio: '',
+        Stock: '',
         CodigoDeBarra: '',
-        IdCarnetFamilia: '',
+        IdArticuloFamilia: '',
         FechaAlta: moment(new Date()).format("YYYY-MM-DD"),
         Activo: true,
       });
     alert("preparando el Alta...");
-    console.log(Item);
   }
+
 
 
   function Imprimir() {
     alert("En desarrollo...");
   }
 
-  async function ActivarDesactivar(item) {
-    const resp = window.confirm(
-      "Está seguro que quiere " +
-        (item.Activo ? "desactivar" : "activar") +
-        " el registro?"
-    );
-    if (resp) {
-      alert("Activando/Desactivando...");
-    }
+async function ActivarDesactivar(item) {
+  const resp = window.confirm(
+    "Está seguro que quiere " +
+      (item.Activo ? "desactivar" : "activar") +
+      " el registro?"
+  );
+  if (resp) {
+    await carnetsService.ActivarDesactivar(item);
+    await Buscar();
   }
+}
 
-  async function Grabar(item) {
+
+async function Grabar(item) {
+  // agregar o modificar
+  try
+  {
+    await articulosService.Grabar(item);
+  }
+  catch (error)
+  {
+    alert(error?.response?.data?.message ?? error.toString())
+    return;
+  }
+  await Buscar();
+  Volver();
+
+  setTimeout(() => {
     alert(
       "Registro " +
         (AccionABMC === "A" ? "agregado" : "modificado") +
         " correctamente."
     );
+  }, 0);
+}
 
-    Volver();
-  }
 
   // Volver/Cancelar desde Agregar/Modificar/Consultar
   function Volver() {
@@ -146,9 +161,7 @@ async function Buscar() {
         }
 
       {/* Tabla de resutados de busqueda y Paginador */}
-      
-      {AccionABMC === "L" && Items?.length > 0 && 
-      <CarnetsListado
+      {AccionABMC === "L" && Items?.length > 0 &&  <CarnetsListado
         {...{
           Items,
           Consultar,
@@ -161,9 +174,9 @@ async function Buscar() {
           Buscar,
         }}
       />
-        }
-{AccionABMC === "L" && Items?.length === 0 && 
-      <div className="alert alert-info mensajesAlert">
+    }
+
+{AccionABMC === "L" && Items?.length === 0 &&  <div className="alert alert-info mensajesAlert">
         <i className="fa fa-exclamation-sign"></i>
         No se encontraron registros...
       </div>
@@ -173,8 +186,7 @@ async function Buscar() {
       {AccionABMC !== "L" && 
       <CarnetsRegistro
         {...{ AccionABMC, CarnetsFamilias, Item, Grabar, Volver }}
-      />
-        }
+      /> }
     </div>
   );
 }

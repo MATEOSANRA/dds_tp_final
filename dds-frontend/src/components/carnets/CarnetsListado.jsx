@@ -1,7 +1,3 @@
-// Este componente recibe como parametros item, registrototal, pagina y paginas
-// El resto son metodos pasados por su padre
-// Usa item como el parametro de las funciones
-
 import React from "react";
 import moment from "moment";
 
