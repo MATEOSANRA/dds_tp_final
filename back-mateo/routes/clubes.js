@@ -31,7 +31,7 @@ router.get("/api/clubes", async function (req, res, next) {
       "Abierto",
     ],
     order: [["Nombre", "ASC"]],
-
+    where
   });
 
   return res.json({ Items: rows, RegistrosTotal: count });
@@ -52,7 +52,12 @@ router.get("/api/clubes/:id", async function (req, res, next) {
     ],
     where: { IdClub: req.params.id },
   });
-  res.json(items);
+  if (items){
+    res.json(items);
+  }
+  else{
+    res.status(404).json({message: "No se ha encontrado el club"})
+  }
 });
 
 router.post("/api/clubes/", async (req, res) => {
@@ -137,7 +142,7 @@ router.delete("/api/clubes/:id", async (req, res) => {
   // #swagger.summary = 'elimina un Carnet'
   // #swagger.parameters['id'] = { description: 'identificador del Carnet..' }
 
-  let bajaFisica = false;
+  let bajaFisica = true;
 
   if (bajaFisica) {
     // baja fisica
@@ -150,9 +155,9 @@ router.delete("/api/clubes/:id", async (req, res) => {
     // baja lógica
     try {
       let data = await db.sequelize.query(
-        "UPDATE clubes SET Activo = case when Activo = 1 then 0 else 1 end WHERE IdCarnet = :IdCarnet",
+        "UPDATE clubes SET Abierto = case when Abierto = 1 then 0 else 1 end WHERE IdClub = :IdClub",
         {
-          replacements: { IdClub: +req.params.id },
+          replacements: { IdClub: req.params.id },
         }
       );
       res.sendStatus(200);

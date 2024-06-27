@@ -68,6 +68,12 @@ const Clubes = sequelize.define(
     FechaFundacion: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "Fecha es requerido",
+        }
+      }
     },
     IdLiga: {
       type: DataTypes.INTEGER,
