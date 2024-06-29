@@ -1,10 +1,10 @@
 const request = require("supertest");
 const app = require("../index");
 
-describe("GET /api/autores", function () {
-  it("Devolveria todos los autores", async function () {
+describe("GET /api/provincias", function () {
+  it("Devolveria todos los provincias", async function () {
     const res = await request(app)
-      .get("/api/autores")
+      .get("/api/provincias")
       .set("content-type", "application/json");
     expect(res.headers["content-type"]).toEqual(
       "application/json; charset=utf-8"
@@ -13,9 +13,8 @@ describe("GET /api/autores", function () {
     expect(res.body).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          IdAutor: expect.any(Number),
+          IdProvincia: expect.any(Number),
           Nombre: expect.any(String),
-          FechaNacimiento: expect.any(String),
         }),
       ])
     );
@@ -23,16 +22,15 @@ describe("GET /api/autores", function () {
 });
 
 
-describe("GET /api/autores/:id", function () {
-  it("respond with json containing a single autores", async function () {
+describe("GET /api/provincias/:id", function () {
+  it("respond with json containing a single provincias", async function () {
     const res = await request(app)
-      .get("/api/autores/1");
+      .get("/api/provincias/1");
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(
       expect.objectContaining({
-        IdAutor: 1,
+        IdProvincia: 1,
         Nombre: expect.any(String),
-        FechaPublicacion: expect.any(String),
       })
     );
   });

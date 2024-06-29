@@ -4,10 +4,10 @@ const db = require("../base-orm/sequelize-init");
 const { Op, ValidationError } = require("sequelize");
 const auth = require("../seguridad/auth");
 
-router.get("/api/clubes", async function (req, res, next) {
-  // #swagger.tags = ['Clubes']
-  // #swagger.summary = 'obtiene todos los Clubes'
-  // consulta de Clubes con filtros y paginacion
+router.get("/api/jugadores", async function (req, res, next) {
+  // #swagger.tags = ['Jugadores']
+  // #swagger.summary = 'obtiene todos los Jugadores'
+  // consulta de Jugadores con filtros y paginacion
 
   let where = {};
   if (req.query.Nombre != undefined && req.query.Nombre !== "") {
@@ -15,20 +15,19 @@ router.get("/api/clubes", async function (req, res, next) {
       [Op.like]: "%" + req.query.Nombre + "%",
     };
   }
-  if (req.query.Abierto != undefined && req.query.Abierto !== "") {
+  if (req.query.Retirado != undefined && req.query.Retirado !== "") {
     // true o false en el modelo, en base de datos es 1 o 0
     // convertir el string a booleano
-    where.Abierto = req.query.Abierto === "true";
+    where.Retirado = req.query.Retirado === "true";
   }
 
-  const { count, rows } = await db.Clubes.findAndCountAll({
+  const { count, rows } = await db.Jugadores.findAndCountAll({
     attributes: [
-      "IdClub",
+      "IdJugador",
       "Nombre",
-      "FechaFundacion",
-      "IdLiga",
-      "Abono",
-      "Abierto",
+      "FechaNacimiento",
+      "IdPosicion",
+      "Retirado",
     ],
     order: [["Nombre", "ASC"]],
     where
@@ -37,44 +36,42 @@ router.get("/api/clubes", async function (req, res, next) {
   return res.json({ Items: rows, RegistrosTotal: count });
 });
 
-router.get("/api/clubes/:id", async function (req, res, next) {
-  // #swagger.tags = ['Clubes']
+router.get("/api/jugadores/:id", async function (req, res, next) {
+  // #swagger.tags = ['Jugadores']
   // #swagger.summary = 'obtiene un Carnet'
   // #swagger.parameters['id'] = { description: 'identificador del Carnet...' }
-  let items = await db.Clubes.findOne({
+  let items = await db.Jugadores.findOne({
     attributes: [
-      "IdClub",
+      "IdJugador",
       "Nombre",
-      "FechaFundacion",
-      "IdLiga",
-      "Abono",
-      "Abierto",
+      "FechaNacimiento",
+      "IdPosicion",
+      "Retirado",
     ],
-    where: { IdClub: req.params.id },
+    where: { IdJugador: req.params.id },
   });
   if (items){
     res.json(items);
   }
   else{
-    res.status(404).json({message: "No se ha encontrado el club"})
+    res.status(404).json({message: "No se ha encontrado el jugador"})
   }
 });
 
-router.post("/api/clubes/", async (req, res) => {
-  // #swagger.tags = ['clubes']
-  // #swagger.summary = 'agrega un clubes'
+router.post("/api/jugadores/", async (req, res) => {
+  // #swagger.tags = ['jugadores']
+  // #swagger.summary = 'agrega un jugadores'
   /*    #swagger.parameters['item'] = {
                 in: 'body',
                 description: 'nuevo Carnet',
-                schema: { $ref: '#/definitions/clubes' }
+                schema: { $ref: '#/definitions/jugadores' }
     } */
   try {
-    let data = await db.Clubes.create({
+    let data = await db.Jugadores.create({
       Nombre: req.body.Nombre,
-      Abono: req.body.Abono,
-      IdLiga: req.body.IdLiga,
-      FechaFundacion: req.body.FechaFundacion,
-      Abierto: req.body.Abierto,
+      IdPosicion: req.body.IdPosicion,
+      FechaNacimiento: req.body.FechaNacimiento,
+      Retirado: req.body.Retirado,
     });
     res.status(200).json(data.dataValues); // devolvemos el registro agregado!
   } catch (err) {
@@ -90,37 +87,35 @@ router.post("/api/clubes/", async (req, res) => {
   }
 });
 
-router.put("/api/clubes/:id", async (req, res) => {
-  // #swagger.tags = ['clubes']
+router.put("/api/jugadores/:id", async (req, res) => {
+  // #swagger.tags = ['jugadores']
   // #swagger.summary = 'actualiza un Carnet'
   // #swagger.parameters['id'] = { description: 'identificador del Carnet...' }
   /*    #swagger.parameters['Carnet'] = {
                 in: 'body',
                 description: 'Carnet a actualizar',
-                schema: { $ref: '#/definitions/clubes' }
+                schema: { $ref: '#/definitions/jugadores' }
     } */
 
   try {
-    let item = await db.Clubes.findOne({
+    let item = await db.Jugadores.findOne({
       attributes: [
-        "IdClub",
+        "IdJugador",
         "Nombre",
-        "FechaFundacion",
-        "IdLiga",
-        "Abono",
-        "Abierto",
+        "FechaNacimiento",
+        "IdPosicion",
+        "Retirado",
       ],
-      where: { IdClub: req.params.id },
+      where: { IdJugador: req.params.id },
     });
     if (!item) {
       res.status(404).json({ message: "Artículo no encontrado" });
       return;
     }
     item.Nombre = req.body.Nombre;
-    item.Abono = req.body.Abono;
-    item.IdLiga = req.body.IdLiga;
-    item.FechaFundacion = req.body.FechaFundacion;
-    item.Abierto = req.body.Abierto;
+    item.IdPosicion = req.body.IdPosicion;
+    item.FechaNacimiento = req.body.FechaNacimiento;
+    item.Retirado = req.body.Retirado;
     await item.save();
 
     res.sendStatus(204);
@@ -137,19 +132,17 @@ router.put("/api/clubes/:id", async (req, res) => {
   }
 });
 
-router.delete("/api/clubes/:id", async (req, res) => {
-  // #swagger.tags = ['clubes']
+router.delete("/api/jugadores/:id", async (req, res) => {
+  // #swagger.tags = ['jugadores']
   // #swagger.summary = 'elimina un Carnet'
   // #swagger.parameters['id'] = { description: 'identificador del Carnet..' }
 
-
-  //cambiar esta variable para cambiar de tipo de baja
   let bajaFisica = false;
 
   if (bajaFisica) {
     // baja fisica
-    let filasBorradas = await db.Clubes.destroy({
-      where: { IdClub: req.params.id },
+    let filasBorradas = await db.Jugadores.destroy({
+      where: { IdJugador: req.params.id },
     });
     if (filasBorradas == 1) res.sendStatus(200);
     else res.sendStatus(404);
@@ -157,9 +150,9 @@ router.delete("/api/clubes/:id", async (req, res) => {
     // baja lógica
     try {
       let data = await db.sequelize.query(
-        "UPDATE clubes SET Abierto = case when Abierto = 1 then 0 else 1 end WHERE IdClub = :IdClub",
+        "UPDATE jugadores SET Retirado = case when Retirado = 1 then 0 else 1 end WHERE IdJugador = :IdJugador",
         {
-          replacements: { IdClub: req.params.id },
+          replacements: { IdJugador: req.params.id },
         }
       );
       res.sendStatus(200);
@@ -180,7 +173,7 @@ router.delete("/api/clubes/:id", async (req, res) => {
 //-- SEGURIDAD ---------------------------
 //------------------------------------
 router.get(
-    "/api/clubesJWT",
+    "/api/jugadoresJWT",
     auth.authenticateJWT,
     async function (req, res, next) {
       /* #swagger.security = [{
@@ -194,14 +187,13 @@ router.get(
         return res.status(403).json({ message: "usuario no autorizado!" });
       }
   
-      let items = await db.Clubes.findAll({
+      let items = await db.Jugadores.findAll({
         attributes: [
-          "IdClub",
+          "IdJugador",
           "Nombre",
-          "FechaFundacion",
-          "IdLiga",
-          "Abono",
-          "Abierto",
+          "FechaNacimiento",
+          "IdPosicion",
+          "Retirado",
         ],
         order: [["Nombre", "ASC"]],
       });
@@ -211,4 +203,3 @@ router.get(
     
 
 module.exports = router;
-

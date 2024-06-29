@@ -35,13 +35,36 @@ app.get("/", (req, res) => {
   res.send("dds-backend iniciado!");
 });
 
+
+// Ruta de Clubes y Ligas
+
 const clubesRouter = require("./routes/clubes");
 app.use(clubesRouter);
 
 const ligasRouter = require("./routes/ligas");
 app.use(ligasRouter);
 
-//
+
+// Ruta de Jugadores y Posiciones
+
+const jugadoresRouter = require("./routes/jugadores");
+app.use(jugadoresRouter);
+
+const posicionesRouter = require("./routes/posiciones");
+app.use(posicionesRouter);
+
+
+// Ruta de Estadios y Provincias
+
+const estadiosRouter = require("./routes/estadios");
+app.use(estadiosRouter);
+
+const provinciasRouter = require("./routes/provincias");
+app.use(provinciasRouter);
+
+
+// Ruta de Seguridad
+
 const seguridadRouter = require("./routes/seguridad");
 app.use(seguridadRouter);
 
