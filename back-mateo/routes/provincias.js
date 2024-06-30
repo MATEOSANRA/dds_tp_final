@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../seguridad/auth");
 const db = require("../base-orm/sequelize-init");
 
 // los errores asyncronos, sino los controlamos, por defecto hacen caer el servidor

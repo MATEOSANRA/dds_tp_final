@@ -10,7 +10,7 @@ app.use(express.json()); // para poder leer json en el body
 const cors = require("cors");
 app.use(
   cors({
-    origin: "*", // origin: 'https://dds-frontend.azurewebsites.net'
+    origin: "*"
   })
 );
 

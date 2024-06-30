@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../seguridad/auth");
 const db = require("../base-orm/sequelize-init");
 
 router.get("/api/posiciones", async function (req, res, next) {
