@@ -19,13 +19,13 @@ function Inicio() {
       </p>
       <p>¡Aprende, y sumate a este gran deporte!</p>
       <div style={{ textAlign: "center" }}>
-        <Link to="/ligas" className="btn btn-primary">
-          <i className="fa fa-search"></i> Ligas Disponibles
+        <Link to="/clubes" className="btn btn-primary">
+          <i className="fa fa-search"></i> Clubes Disponibles
         </Link>
-        <Link to="/ligas" className="btn btn-primary">
+        <Link to="/jugadores" className="btn btn-primary">
           <i className="fa fa-search"></i> Jugadores Disponibles
         </Link>
-        <Link to="/ligas" className="btn btn-primary">
+        <Link to="/estadios" className="btn btn-primary">
           <i className="fa fa-search"></i> Estadios Disponibles
         </Link>
       </div>
