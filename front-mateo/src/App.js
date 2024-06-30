@@ -1,20 +1,23 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Inicio } from "./components/Inicio";
-import { Ligas } from "./components/Ligas";
+import { Ligas } from "./components/ligas/Ligas";
+import LigasJWT from "./components/ligas/LigasJWT";
 import { Menu } from "./components/Menu";
 import { Footer } from "./components/Footer";
 import { Clubes } from "./components/clubes/Clubes";
 import { ModalDialog } from "./components/ModalDialog";
-import { ClubesJWT } from "./components/clubesJWT/ClubesJWT";
-import { Posiciones } from "./components/Posiciones";
+import { ClubesJWT } from "./components/ligas/ClubesJWT";
+import { Posiciones } from "./components/posiciones/Posiciones";
+import PosicionesJWT from "./components/posiciones/PosicionesJWT";
 import { Jugadores } from "./components/jugadores/Jugadores";
-import { JugadoresJWT } from "./components/jugadoresJWT/JugadoresJWT";
+import { JugadoresJWT } from "./components/posiciones/JugadoresJWT";
 import { RequireAuth } from "./components/RequiereAuth";
 import { Login } from "./components/login/Login";
-import { Provincias } from "./components/Provincias";
+import { Provincias } from "./components/provincias/Provincias";
+import ProvinciasJWT from "./components/provincias/ProvinciasJWT";
 import { Estadios } from "./components/estadios/Estadios";
-import { EstadiosJWT } from "./components/estadiosJWT/EstadiosJWT";
+import { EstadiosJWT } from "./components/provincias/EstadiosJWT";
 
 function App() {
   return (
@@ -28,27 +31,45 @@ function App() {
             <Route path="/ligas" element={<Ligas />} />
             <Route path="/clubes" element={<Clubes />} />
             <Route
-              path="/clubesjwt" element={ <RequireAuth>
-                                              <ClubesJWT />
-                                          </RequireAuth>
+              path="/clubesjwt" element={<RequireAuth>
+                <ClubesJWT />
+              </RequireAuth>
+              }
+            />
+            <Route
+              path="/ligasjwt" element={<RequireAuth>
+                <LigasJWT />
+              </RequireAuth>
               }
             />
 
             <Route path="/posiciones" element={<Posiciones />} />
             <Route path="/jugadores" element={<Jugadores />} />
             <Route
-              path="/jugadoresjwt" element={ <RequireAuth>
-                                              <JugadoresJWT />
-                                          </RequireAuth>
+              path="/jugadoresjwt" element={<RequireAuth>
+                <JugadoresJWT />
+              </RequireAuth>
+              }
+            />
+            <Route
+              path="/posicionesjwt" element={<RequireAuth>
+                <PosicionesJWT />
+              </RequireAuth>
               }
             />
 
             <Route path="/provincias" element={<Provincias />} />
             <Route path="/estadios" element={<Estadios />} />
             <Route
-              path="/estadiosjwt" element={ <RequireAuth>
-                                              <EstadiosJWT />
-                                          </RequireAuth>
+              path="/estadiosjwt" element={<RequireAuth>
+                <EstadiosJWT />
+              </RequireAuth>
+              }
+            />
+            <Route
+              path="/provinciasjwt" element={<RequireAuth>
+                <ProvinciasJWT />
+              </RequireAuth>
               }
             />
 

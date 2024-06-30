@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //import { autoresMockService } from '../services/autores-mock.service';
-import { provinciasService } from "../services/provincias.service";
+import { provinciasService } from "../../services/provincias.service";
 function Provincias() {
   const tituloPagina = "Provincias";
   const [provincias, setProvincias] = useState(null);

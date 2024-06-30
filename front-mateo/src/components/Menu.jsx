@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import AuthService from "../services/auth.service";
+import '../estilos/Menu.css'
 
 function Menu() {
+  const user = AuthService.getUsuarioLogueado()
+
   const [usuarioLogueado, setUsuarioLogueado] = useState(
-    AuthService.getUsuarioLogueado()
+    user
   );
 
   function CambioUsuarioLogueado(_usuarioLogueado) {
@@ -44,27 +47,17 @@ function Menu() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/ligas">
-                Ligas
-              </NavLink>
-            </li>
-            <li className="nav-item">
               <NavLink className="nav-link" to="/clubes">
                 Clubes
               </NavLink>
             </li>
             <li className="nav-item">
               <NavLink
-                className="nav-link"
+                className={(user === 'admin' || user === 'mateo') ? "nav-link" : "nav-link sin-acceso"}
                 title="exclusivo para administradores"
-                to="/clubesjwt"
+                to="/ligasjwt"
               >
-                Clubes JWT
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/posiciones">
-                Posiciones
+                Ligas JWT
               </NavLink>
             </li>
             <li className="nav-item">
@@ -74,16 +67,11 @@ function Menu() {
             </li>
             <li className="nav-item">
               <NavLink
-                className="nav-link"
+                className={(user === 'admin' || user === 'nico') ? "nav-link" : "nav-link sin-acceso"}
                 title="exclusivo para administradores"
-                to="/jugadoresjwt"
+                to="/posicionesjwt"
               >
-                Jugadores JWT
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/provincias">
-                Provincias
+                Posiciones JWT
               </NavLink>
             </li>
             <li className="nav-item">
@@ -93,11 +81,11 @@ function Menu() {
             </li>
             <li className="nav-item">
               <NavLink
-                className="nav-link"
+                className={(user === 'admin' || user === 'pablo') ? "nav-link" : "nav-link sin-acceso"}
                 title="exclusivo para administradores"
-                to="/estadiosjwt"
+                to="/provinciasjwt"
               >
-                Estadios JWT
+                Provincias JWT
               </NavLink>
             </li>
           </ul>

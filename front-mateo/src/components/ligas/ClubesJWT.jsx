@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import  {clubesJWTService}  from "../../services/clubesJWT.service";
+import { clubesJWTService } from "../../services/clubesJWT.service";
 
 
 
@@ -16,7 +16,7 @@ function ClubesJWT() {
 
 
   async function BuscarClubesJWT() {
-     try {
+    try {
       let data = await clubesJWTService.Buscar();
       setClubes(data);
     } catch (error) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //import { autoresMockService } from '../services/autores-mock.service';
-import { posicionesService } from "../services/posiciones.service";
+import { posicionesService } from "../../services/posiciones.service";
 function Posiciones() {
   const tituloPagina = "Posiciones";
   const [posiciones, setPosiciones] = useState(null);
