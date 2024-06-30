@@ -79,6 +79,7 @@ body {
 .redes.whatsapp {
   background-color: #25d366;
 }
+
 .navbar-brand {
   color: violet;
   font-size: 1.5rem;
@@ -117,7 +118,8 @@ label:not([class^="custom-control"]) {
   background-color: #d7dfe7;
   border-radius: 0.625em 0.2em 0rem 0.625em;
   border-bottom: solid;
-  margin-right: -0.9em; /* para que columna label este cerca del input*/
+  margin-right: -0.9em;
+  /* para que columna label este cerca del input*/
   padding-left: 0.5em;
   display: block;
   height: 90%;
@@ -127,7 +129,8 @@ label:not([class^="custom-control"]) {
 @media only screen and (max-width: 575px) {
   label:not([class^="custom-control"]) {
     margin-right: 0em;
-    margin-top: 0.3rem; /* para separar grupo label/input */
+    margin-top: 0.3rem;
+    /* para separar grupo label/input */
   }
 }
 
@@ -136,6 +139,7 @@ label:not([class^="custom-control"]) {
   .inputMedio {
     width: 12em;
   }
+
   .inputChico {
     width: 7em;
   }
@@ -173,7 +177,8 @@ label:not([class^="custom-control"]) {
 .paginador {
   background-color: #e9ecef;
   padding: 0.5rem 1rem 0rem 1rem;
-  margin-top: -1rem; /* para pegarlo a la tabla */
+  margin-top: -1rem;
+  /* para pegarlo a la tabla */
 }
 
 /* todos los input a mayusculas, y no sus placeholders*/
@@ -182,6 +187,7 @@ input {
   /* margin-bottom: 0.2em;  */
   /*separa renglones*/
 }
+
 ::placeholder {
   text-transform: none;
 }
@@ -190,6 +196,12 @@ input {
 thead {
   /* bootstrap thead-light*/
   color: #163b61;
-  background-color: #aeb7d7; /* #e9ecef; */
+  background-color: #aeb7d7;
+  /* #e9ecef; */
   border-color: #dee2e6;
+}
+
+.btn.btn-primary {
+  width: 250px;
+  margin: 1%;
 }
