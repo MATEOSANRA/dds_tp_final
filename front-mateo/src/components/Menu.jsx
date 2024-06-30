@@ -24,7 +24,7 @@ function Menu() {
   return (
     <nav className="navbar navbar-dark bg-dark navbar-expand-md">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#!">
+        <a className="navbar-brand" href="/inicio">
           <i className=""></i>
           &nbsp;<i>⚽</i>
         </a>
