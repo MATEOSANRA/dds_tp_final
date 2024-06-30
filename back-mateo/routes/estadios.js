@@ -15,11 +15,15 @@ router.get("/api/estadios", async function (req, res, next) {
       [Op.like]: "%" + req.query.Nombre + "%",
     };
   }
+
   if (req.query.Activo != undefined && req.query.Activo !== "") {
     // true o false en el modelo, en base de datos es 1 o 0
     // convertir el string a booleano
     where.Activo = req.query.Activo === "true";
   }
+
+  const Pagina = req.query.Pagina ?? 1;
+  const TamPagina = 10;
 
   const { count, rows } = await db.Estadios.findAndCountAll({
     attributes: [
@@ -32,7 +36,9 @@ router.get("/api/estadios", async function (req, res, next) {
       "IdProvincia",
     ],
     order: [["Nombre", "ASC"]],
-    where
+    where,
+    offset: (Pagina - 1) * TamPagina, //Uyilizamos el -1 para que no skippee los 10 primeros registros
+    limit: TamPagina
   });
 
   return res.json({ Items: rows, RegistrosTotal: count });
@@ -44,21 +50,21 @@ router.get("/api/estadios/:id", async function (req, res, next) {
   // #swagger.parameters['id'] = { description: 'identificador del Carnet...' }
   let items = await db.Estadios.findOne({
     attributes: [
-        "IdEstadio",
-        "Nombre",
-        "Capacidad",
-        "FechaInauguracion",
-        "Abono",
-        "Activo",
-        "IdProvincia",
+      "IdEstadio",
+      "Nombre",
+      "Capacidad",
+      "FechaInauguracion",
+      "Abono",
+      "Activo",
+      "IdProvincia",
     ],
     where: { IdEstadio: req.params.id },
   });
-  if (items){
+  if (items) {
     res.json(items);
   }
-  else{
-    res.status(404).json({message: "No se ha encontrado el estadio"})
+  else {
+    res.status(404).json({ message: "No se ha encontrado el estadio" })
   }
 });
 
@@ -85,7 +91,7 @@ router.post("/api/estadios/", async (req, res) => {
       // si son errores de validación, los devolvemos
       let messages = '';
       err.errors.forEach((x) => messages += (x.path ?? 'campo') + ": " + x.message + '\n');
-      res.status(400).json({message : messages});
+      res.status(400).json({ message: messages });
     } else {
       // si son errores desconocidos, los dejamos que los controle el middleware de errores
       throw err;
@@ -134,7 +140,7 @@ router.put("/api/estadios/:id", async (req, res) => {
       // si son errores de validación, los devolvemos
       let messages = '';
       err.errors.forEach((x) => messages += x.path + ": " + x.message + '\n');
-      res.status(400).json({message : messages});
+      res.status(400).json({ message: messages });
     } else {
       // si son errores desconocidos, los dejamos que los controle el middleware de errores
       throw err;
@@ -179,40 +185,40 @@ router.delete("/api/estadios/:id", async (req, res) => {
   }
 });
 
-//------------------------------------
-//-- SEGURIDAD ---------------------------
-//------------------------------------
-router.get(
-    "/api/estadiosJWT",
-    auth.authenticateJWT,
-    async function (req, res, next) {
-      /* #swagger.security = [{
-                 "bearerAuth1": []
-          }] */
-  
-      // #swagger.tags = ['Articulos']
-      // #swagger.summary = 'obtiene todos los Artículos, con seguridad JWT, solo para rol: admin (usuario:admin, clave:123)'
-      const { rol } = res.locals.user;
-      if (rol !== "admin") {
-        return res.status(403).json({ message: "usuario no autorizado!" });
-      }
-  
-      let items = await db.Estadios.findAll({
-        attributes: [
-          "IdEstadio",
-          "Nombre",
-          "Capacidad",
-          "FechaInauguracion",
-          "Abono",
-          "Activo",
-          "IdProvincia",
-        ],
-        order: [["Nombre", "ASC"]],
-      });
-      res.json(items);
-    }
-  );
-    
+// //------------------------------------
+// //-- SEGURIDAD ---------------------------
+// //------------------------------------
+// router.get(
+//   "/api/estadiosJWT",
+//   auth.authenticateJWT,
+//   async function (req, res, next) {
+//     /* #swagger.security = [{
+//                "bearerAuth1": []
+//         }] */
+
+//     // #swagger.tags = ['Articulos']
+//     // #swagger.summary = 'obtiene todos los Artículos, con seguridad JWT, solo para rol: admin (usuario:admin, clave:123)'
+//     const { rol } = res.locals.user;
+//     if (rol !== "admin") {
+//       return res.status(403).json({ message: "usuario no autorizado!" });
+//     }
+
+//     let items = await db.Estadios.findAll({
+//       attributes: [
+//         "IdEstadio",
+//         "Nombre",
+//         "Capacidad",
+//         "FechaInauguracion",
+//         "Abono",
+//         "Activo",
+//         "IdProvincia",
+//       ],
+//       order: [["Nombre", "ASC"]],
+//     });
+//     res.json(items);
+//   }
+// );
+
 
 module.exports = router;
 

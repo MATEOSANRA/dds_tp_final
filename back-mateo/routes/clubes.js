@@ -15,11 +15,15 @@ router.get("/api/clubes", async function (req, res, next) {
       [Op.like]: "%" + req.query.Nombre + "%",
     };
   }
+
   if (req.query.Abierto != undefined && req.query.Abierto !== "") {
     // true o false en el modelo, en base de datos es 1 o 0
     // convertir el string a booleano
     where.Abierto = req.query.Abierto === "true";
   }
+
+  const Pagina = req.query.Pagina ?? 1
+  const TamPagina = 10;
 
   const { count, rows } = await db.Clubes.findAndCountAll({
     attributes: [
@@ -31,7 +35,9 @@ router.get("/api/clubes", async function (req, res, next) {
       "Abierto",
     ],
     order: [["Nombre", "ASC"]],
-    where
+    where,
+    offset: (Pagina - 1) * TamPagina,
+    limit: TamPagina
   });
 
   return res.json({ Items: rows, RegistrosTotal: count });
@@ -52,11 +58,11 @@ router.get("/api/clubes/:id", async function (req, res, next) {
     ],
     where: { IdClub: req.params.id },
   });
-  if (items){
+  if (items) {
     res.json(items);
   }
-  else{
-    res.status(404).json({message: "No se ha encontrado el club"})
+  else {
+    res.status(404).json({ message: "No se ha encontrado el club" })
   }
 });
 
@@ -82,7 +88,7 @@ router.post("/api/clubes/", async (req, res) => {
       // si son errores de validación, los devolvemos
       let messages = '';
       err.errors.forEach((x) => messages += (x.path ?? 'campo') + ": " + x.message + '\n');
-      res.status(400).json({message : messages});
+      res.status(400).json({ message: messages });
     } else {
       // si son errores desconocidos, los dejamos que los controle el middleware de errores
       throw err;
@@ -129,7 +135,7 @@ router.put("/api/clubes/:id", async (req, res) => {
       // si son errores de validación, los devolvemos
       let messages = '';
       err.errors.forEach((x) => messages += x.path + ": " + x.message + '\n');
-      res.status(400).json({message : messages});
+      res.status(400).json({ message: messages });
     } else {
       // si son errores desconocidos, los dejamos que los controle el middleware de errores
       throw err;
@@ -176,39 +182,39 @@ router.delete("/api/clubes/:id", async (req, res) => {
   }
 });
 
-//------------------------------------
-//-- SEGURIDAD ---------------------------
-//------------------------------------
-router.get(
-    "/api/clubesJWT",
-    auth.authenticateJWT,
-    async function (req, res, next) {
-      /* #swagger.security = [{
-                 "bearerAuth1": []
-          }] */
-  
-      // #swagger.tags = ['Articulos']
-      // #swagger.summary = 'obtiene todos los Artículos, con seguridad JWT, solo para rol: admin (usuario:admin, clave:123)'
-      const { rol } = res.locals.user;
-      if (rol !== "admin") {
-        return res.status(403).json({ message: "usuario no autorizado!" });
-      }
-  
-      let items = await db.Clubes.findAll({
-        attributes: [
-          "IdClub",
-          "Nombre",
-          "FechaFundacion",
-          "IdLiga",
-          "Abono",
-          "Abierto",
-        ],
-        order: [["Nombre", "ASC"]],
-      });
-      res.json(items);
-    }
-  );
-    
+// //------------------------------------
+// //-- SEGURIDAD ---------------------------
+// //------------------------------------
+// router.get(
+//   "/api/clubesJWT",
+//   auth.authenticateJWT,
+//   async function (req, res, next) {
+//     /* #swagger.security = [{
+//                "bearerAuth1": []
+//         }] */
+
+//     // #swagger.tags = ['Articulos']
+//     // #swagger.summary = 'obtiene todos los Artículos, con seguridad JWT, solo para rol: admin (usuario:admin, clave:123)'
+//     const { rol } = res.locals.user;
+//     if (rol !== "admin") {
+//       return res.status(403).json({ message: "usuario no autorizado!" });
+//     }
+
+//     let items = await db.Clubes.findAll({
+//       attributes: [
+//         "IdClub",
+//         "Nombre",
+//         "FechaFundacion",
+//         "IdLiga",
+//         "Abono",
+//         "Abierto",
+//       ],
+//       order: [["Nombre", "ASC"]],
+//     });
+//     res.json(items);
+//   }
+// );
+
 
 module.exports = router;
 

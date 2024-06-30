@@ -10,16 +10,31 @@ const users = [
     rol: "admin",
   },
   {
-    usuario: "juan",
-    clave: "123",
+    usuario: "invitado",
+    clave: "",
     rol: "member",
   },
+  {
+    usuario: "mateo",
+    clave: "123",
+    rol: "adminClubes",
+  },
+  {
+    usuario: "nico",
+    clave: "123",
+    rol: "adminJugadores",
+  },
+  {
+    usuario: "pablo",
+    clave: "123",
+    rol: "adminEstadios",
+  }
 ];
 let refreshTokens = [];
 
 router.post("/api/login", (req, res) => {
   // #swagger.tags = ['Seguridad']
-  // #swagger.summary = 'Login de usuarios: admin:123(rol administrador), juan:123(rol miembro)'
+  // #swagger.summary = 'Login de usuarios: admin:123(rol administrador), invitado: (rol miembro), mateo:123(rol adminClubes), nico:123(rol adminJugadores), pablo:123(rol adminEstadios)'
 
   const { usuario, clave } = req.body;
 
@@ -99,4 +114,5 @@ router.post("/api/token", (req, res) => {
     });
   });
 });
+
 module.exports = router;
