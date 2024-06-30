@@ -18,9 +18,9 @@ export default function ClubesListado({
         <thead>
           <tr>
             <th className="text-center">Nombre</th>
-            <th className="text-center">Fecha de Fundacion</th>
+            <th className="text-center">Fecha de Fundación</th>
             <th className="text-center">Abono</th>
-            <th className="text-center">Abierto</th>
+            <th className="text-center">Activo</th>
             <th className="text-center text-nowrap">Acciones</th>
           </tr>
         </thead>
@@ -32,7 +32,7 @@ export default function ClubesListado({
                 <td className="text-end">
                   {moment(Item.FechaFundacion).format("DD/MM/YYYY")}
                 </td>
-                <td className="text-end">${Item.Abono}.00</td>
+                <td className="text-end">${Item.Abono}</td>
                 <td>{Item.Abierto ? "SI" : "NO"}</td>
                 <td className="text-center text-nowrap">
                   <button

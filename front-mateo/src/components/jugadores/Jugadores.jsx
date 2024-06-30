@@ -96,8 +96,8 @@ function Jugadores() {
   async function ActivarDesactivar(item) {
     modalDialogService.Confirm(
       "Esta seguro que quiere " +
-        (item.Retirado ? "Retirar el jugador" : "Volver del retiro al jugador") +
-        " el registro?",
+      (item.Retirado ? "Retirar el jugador" : "Volver del retiro al jugador") +
+      " el registro?",
       undefined,
       undefined,
       undefined,
@@ -124,8 +124,8 @@ function Jugadores() {
     //setTimeout(() => {
     modalDialogService.Alert(
       "Registro " +
-        (AccionABMC === "A" ? "agregado" : "modificado") +
-        " correctamente."
+      (AccionABMC === "A" ? "agregado" : "modificado") +
+      " correctamente."
     );
     //}, 0);
   }

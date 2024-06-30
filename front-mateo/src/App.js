@@ -1,7 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Inicio } from "./components/Inicio";
-import { Ligas } from "./components/ligas/Ligas";
 import LigasJWT from "./components/ligas/LigasJWT";
 import { Menu } from "./components/Menu";
 import { Footer } from "./components/Footer";
@@ -26,7 +25,6 @@ function App() {
         <div className="divBody">
           <Routes>
             <Route path="/inicio" element={<Inicio />} />
-            <Route path="/ligas" element={<Ligas />} />
             <Route path="/clubes" element={<Clubes />} />
             <Route
               path="/ligasjwt" element={<RequireAuth>

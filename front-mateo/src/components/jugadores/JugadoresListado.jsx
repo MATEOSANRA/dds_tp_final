@@ -18,8 +18,8 @@ export default function JugadoresListado({
         <thead>
           <tr>
             <th className="text-center">Nombre</th>
-            <th className="text-center">Fecha de Fundacion</th>
-            <th className="text-center">Abierto</th>
+            <th className="text-center">Fecha de Nacimiento</th>
+            <th className="text-center">En actividad</th>
             <th className="text-center text-nowrap">Acciones</th>
           </tr>
         </thead>

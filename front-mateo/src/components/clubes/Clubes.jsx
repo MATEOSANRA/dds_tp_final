@@ -97,8 +97,8 @@ function Clubes() {
   async function ActivarDesactivar(item) {
     modalDialogService.Confirm(
       "Esta seguro que quiere " +
-        (item.Abierto ? "Habilitar el club" : "Deshabilitar el club") +
-        " el registro?",
+      (item.Abierto ? "Habilitar el club" : "Deshabilitar el club") +
+      " el registro?",
       undefined,
       undefined,
       undefined,
@@ -125,8 +125,8 @@ function Clubes() {
     //setTimeout(() => {
     modalDialogService.Alert(
       "Registro " +
-        (AccionABMC === "A" ? "agregado" : "modificado") +
-        " correctamente."
+      (AccionABMC === "A" ? "agregado" : "modificado") +
+      " correctamente."
     );
     //}, 0);
   }

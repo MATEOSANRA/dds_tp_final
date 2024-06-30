@@ -67,16 +67,20 @@ export default function EstadiosRegistro({
             </div>
             <div className="col-sm-8 col-md-6">
               <input
-                type="number" step=".01"
+                type="number" step="1"
                 {...register("Capacidad", {
                   required: { value: true, message: "Capacidad es requerido" },
                   min: {
-                    value: 0.01,
+                    value: 1,
                     message: "Capacidad debe ser mayor a 0",
                   },
                   max: {
-                    value: 99999.99,
-                    message: "Capacidad debe ser menor o igual a 99999.99",
+                    value: 99999999999999,
+                    message: "No hay tantas personas en el planeta",
+                  },
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Las personas no son decimales...",
                   },
                 })}
                 className={
@@ -141,8 +145,8 @@ export default function EstadiosRegistro({
             </div>
           </div>
 
-                    {/* campo Abono */}
-                    <div className="row">
+          {/* campo Abono */}
+          <div className="row">
             <div className="col-sm-4 col-md-3 offset-md-1">
               <label className="col-form-label" htmlFor="Abono">
                 Abono<span className="text-danger">*</span>:

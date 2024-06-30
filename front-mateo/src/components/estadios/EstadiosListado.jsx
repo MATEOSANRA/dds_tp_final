@@ -34,7 +34,7 @@ export default function EstadiosListado({
                 <td className="text-end">
                   {moment(Item.FechaInauguracion).format("DD/MM/YYYY")}
                 </td>
-                <td className="text-end">{Item.Abono}</td>
+                <td className="text-end">${Item.Abono}</td>
                 <td>{Item.Activo ? "SI" : "NO"}</td>
                 <td className="text-center text-nowrap">
                   <button

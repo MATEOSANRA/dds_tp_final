@@ -31,7 +31,7 @@ function ProvinciasJWT() {
       <table className="table table-bordered table-striped">
         <thead>
           <tr>
-            <th style={{ width: "20%" }}>IdLiga</th>
+            <th style={{ width: "20%" }}>IdProvincia</th>
             <th style={{ width: "50%" }}>Nombre</th>
           </tr>
         </thead>
