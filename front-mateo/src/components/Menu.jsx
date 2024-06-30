@@ -81,6 +81,25 @@ function Menu() {
                 Jugadores JWT
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/provincias">
+                Provincias
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/estadios">
+                Estadios
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                className="nav-link"
+                title="exclusivo para administradores"
+                to="/estadiosjwt"
+              >
+                Estadios JWT
+              </NavLink>
+            </li>
           </ul>
 
           <ul className="navbar-nav ms-auto">

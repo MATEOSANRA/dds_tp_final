@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-export default function ClubesListado({
+export default function EstadiosListado({
   Items,
   Consultar,
   Modificar,
@@ -18,22 +18,24 @@ export default function ClubesListado({
         <thead>
           <tr>
             <th className="text-center">Nombre</th>
-            <th className="text-center">Fecha de Fundacion</th>
+            <th className="text-center">Capacidad</th>
+            <th className="text-center">Fecha de Inauguracion</th>
             <th className="text-center">Abono</th>
-            <th className="text-center">Abierto</th>
+            <th className="text-center">Activo</th>
             <th className="text-center text-nowrap">Acciones</th>
           </tr>
         </thead>
         <tbody>
           {Items &&
             Items.map((Item) => (
-              <tr key={Item.IdClub}>
+              <tr key={Item.IdEstadio}>
                 <td>{Item.Nombre}</td>
+                <td className="text-end">{Item.Capacidad}</td>
                 <td className="text-end">
-                  {moment(Item.FechaFundacion).format("DD/MM/YYYY")}
+                  {moment(Item.FechaInauguracion).format("DD/MM/YYYY")}
                 </td>
                 <td className="text-end">{Item.Abono}</td>
-                <td>{Item.Abierto ? "SI" : "NO"}</td>
+                <td>{Item.Activo ? "SI" : "NO"}</td>
                 <td className="text-center text-nowrap">
                   <button
                     className="btn btn-sm btn-outline-primary"
@@ -52,15 +54,15 @@ export default function ClubesListado({
                   <button
                     className={
                       "btn btn-sm " +
-                      (Item.Abierto
+                      (Item.Activo
                         ? "btn-outline-danger"
                         : "btn-outline-success")
                     }
-                    title={Item.Abierto ? "Deshabilitar" : "Habilitar"}
+                    title={Item.Activo ? "Deshabilitar" : "Habilitar"}
                     onClick={() => ActivarDesactivar(Item)}
                   >
                     <i
-                      className={"fa fa-" + (Item.Abierto ? "times" : "check")}
+                      className={"fa fa-" + (Item.Activo ? "times" : "check")}
                     ></i>
                   </button>
                 </td>

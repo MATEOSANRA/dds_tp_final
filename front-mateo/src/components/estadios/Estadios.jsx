@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import ClubesBuscar from "./ClubesBuscar";
-import ClubesListado from "./ClubesListado";
-import ClubesRegistro from "./ClubesRegistro";
-import { clubesService } from "../../services/clubes.service";
-import { ligasService } from "../../services/ligas.service";
+import EstadiosBuscar from "./EstadiosBuscar";
+import EstadiosListado from "./EstadiosListado";
+import EstadiosRegistro from "./EstadiosRegistro";
+import { estadiosService } from "../../services/estadios.service";
+import { provinciasService } from "../../services/provincias.service";
 //import { autoresMockService as autoresService } from "../../services/autores-mock.service";
 import modalDialogService from "../../services/modalDialog.service";
 
-function Clubes() {
+function Estadios() {
   const TituloAccionABMC = {
     A: "(Agregar)",
     B: "(Eliminar)",
@@ -26,15 +26,15 @@ function Clubes() {
   const [Pagina, setPagina] = useState(1);
   const [Paginas, setPaginas] = useState([]);
 
-  const [Ligas, setLigas] = useState(null);
+  const [Provincias, setProvincias] = useState(null);
 
   // cargar al "montar" el componente, solo la primera vez (por la dependencia [])
   useEffect(() => {
-    async function BuscarLigas() {
-      let data = await ligasService.Buscar();
-      setLigas(data);
+    async function BuscarProvincias() {
+      let data = await provinciasService.Buscar();
+      setProvincias(data);
     }
-    BuscarLigas();
+    BuscarProvincias();
   }, []);
 
   async function Buscar(_pagina) {
@@ -46,7 +46,7 @@ function Clubes() {
       _pagina = Pagina;
     }
     modalDialogService.BloquearPantalla(true);
-    const data = await clubesService.Buscar(Nombre, _pagina);
+    const data = await estadiosService.Buscar(Nombre, _pagina);
     modalDialogService.BloquearPantalla(false);
     setItems(data.Items);
     setRegistrosTotal(data.RegistrosTotal);
@@ -60,7 +60,7 @@ function Clubes() {
   }
 
   async function BuscarPorId(item, accionABMC) {
-    const data = await clubesService.BuscarPorId(item);
+    const data = await estadiosService.BuscarPorId(item);
     setItem(data);
     setAccionABMC(accionABMC);
   }
@@ -69,9 +69,9 @@ function Clubes() {
     BuscarPorId(item, "C"); // paso la accionABMC pq es asincrono la busqueda y luego de ejecutarse quiero cambiar el estado accionABMC
   }
   function Modificar(item) {
-    if (!item.Abierto) {
-      //alert("No puede modificarse un club No Abierto.");
-      modalDialogService.Alert("No puede modificarse un club Cerrado.");
+    if (!item.Activo) {
+      //alert("No puede modificarse un estadio No Activo.");
+      modalDialogService.Alert("No puede modificarse un estadio Cerrado.");
       return;
     }
     BuscarPorId(item, "M"); // paso la accionABMC pq es asincrono la busqueda y luego de ejecutarse quiero cambiar el estado accionABMC
@@ -80,12 +80,13 @@ function Clubes() {
   async function Agregar() {
     setAccionABMC("A");
     setItem({
-      IdClub: 0,
+      IdEstadio: 0,
       Nombre: "",
-      FechaFundacion: moment(new Date()).format("YYYY-MM-DD"),
-      IdLiga: "",
+      Capacidad: "",
+      FechaInauguracion: moment(new Date()).format("YYYY-MM-DD"),
+      IdProvincia: "",
       Abono: "",
-      Abierto: true,
+      Activo: true,
     });
     //modalDialogService.Alert("preparando el Alta...");
   }
@@ -97,13 +98,13 @@ function Clubes() {
   async function ActivarDesactivar(item) {
     modalDialogService.Confirm(
       "Esta seguro que quiere " +
-        (item.Abierto ? "Habilitar el club" : "Deshabilitar el club") +
+        (item.Activo ? "Habilitar el estadio" : "Deshabilitar el estadio") +
         " el registro?",
       undefined,
       undefined,
       undefined,
       async () => {
-        await clubesService.ActivarDesactivar(item);
+        await estadiosService.ActivarDesactivar(item);
         await Buscar();
       }
     );
@@ -112,7 +113,7 @@ function Clubes() {
   async function Grabar(item) {
     // agregar o modificar
     try {
-      await clubesService.Grabar(item);
+      await estadiosService.Grabar(item);
     } catch (error) {
       modalDialogService.Alert(
         error?.response?.data?.message ?? error.toString()
@@ -139,11 +140,11 @@ function Clubes() {
   return (
     <div>
       <div className="tituloPagina">
-        Clubes <small>{TituloAccionABMC[AccionABMC]}</small>
+        Estadios <small>{TituloAccionABMC[AccionABMC]}</small>
       </div>
 
       {AccionABMC === "L" && (
-        <ClubesBuscar
+        <EstadiosBuscar
           Nombre={Nombre}
           setNombre={setNombre}
           Buscar={Buscar}
@@ -153,7 +154,7 @@ function Clubes() {
 
       {/* Tabla de resutados de busqueda y Paginador */}
       {AccionABMC === "L" && Items?.length > 0 && (
-        <ClubesListado
+        <EstadiosListado
           {...{
             Items,
             Consultar,
@@ -177,9 +178,9 @@ function Clubes() {
 
       {/* Formulario de alta/modificacion/consulta */}
       {AccionABMC !== "L" && (
-        <ClubesRegistro {...{ AccionABMC, Ligas, Item, Grabar, Volver }} />
+        <EstadiosRegistro {...{ AccionABMC, Provincias, Item, Grabar, Volver }} />
       )}
     </div>
   );
 }
-export { Clubes };
+export { Estadios };

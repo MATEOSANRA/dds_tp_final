@@ -1,5 +1,5 @@
 import React from "react";
-export default function ClubesBuscar({ Nombre, setNombre, Buscar, Agregar }) {
+export default function EstadiosBuscar({ Nombre, setNombre, Buscar, Agregar }) {
   return (
     <form>
       <div className="container-fluid">

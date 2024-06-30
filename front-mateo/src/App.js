@@ -12,6 +12,9 @@ import { Jugadores } from "./components/jugadores/Jugadores";
 import { JugadoresJWT } from "./components/jugadoresJWT/JugadoresJWT";
 import { RequireAuth } from "./components/RequiereAuth";
 import { Login } from "./components/login/Login";
+import { Provincias } from "./components/Provincias";
+import { Estadios } from "./components/estadios/Estadios";
+import { EstadiosJWT } from "./components/estadiosJWT/EstadiosJWT";
 
 function App() {
   return (
@@ -36,6 +39,15 @@ function App() {
             <Route
               path="/jugadoresjwt" element={ <RequireAuth>
                                               <JugadoresJWT />
+                                          </RequireAuth>
+              }
+            />
+
+            <Route path="/provincias" element={<Provincias />} />
+            <Route path="/estadios" element={<Estadios />} />
+            <Route
+              path="/estadiosjwt" element={ <RequireAuth>
+                                              <EstadiosJWT />
                                           </RequireAuth>
               }
             />

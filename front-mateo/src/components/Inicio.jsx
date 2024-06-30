@@ -21,6 +21,12 @@ function Inicio() {
       <Link to="/ligas" className="btn btn-primary">
         <i className="fa fa-search"></i> Ligas Disponibles
       </Link>
+      <Link to="/ligas" className="btn btn-primary">
+        <i className="fa fa-search"></i> Ligas Disponibles
+      </Link>
+      <Link to="/ligas" className="btn btn-primary">
+        <i className="fa fa-search"></i> Ligas Disponibles
+      </Link>
       <span> </span>
       <span></span>
     </div>

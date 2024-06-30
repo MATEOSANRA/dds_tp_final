@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-export default function ClubesRegistro({
+export default function EstadiosRegistro({
   AccionABMC,
-  Ligas,
+  Provincias,
   Item,
   Grabar,
   Volver,
@@ -58,59 +58,89 @@ export default function ClubesRegistro({
             </div>
           </div>
 
-
-          {/* campo FechaFundacion */}
+          {/* campo Capacidad */}
           <div className="row">
             <div className="col-sm-4 col-md-3 offset-md-1">
-              <label className="col-form-label" htmlFor="FechaFundacion">
-                Fecha Fundacion<span className="text-danger">*</span>:
+              <label className="col-form-label" htmlFor="Capacidad">
+                Capacidad<span className="text-danger">*</span>:
+              </label>
+            </div>
+            <div className="col-sm-8 col-md-6">
+              <input
+                type="number" step=".01"
+                {...register("Capacidad", {
+                  required: { value: true, message: "Capacidad es requerido" },
+                  min: {
+                    value: 0.01,
+                    message: "Capacidad debe ser mayor a 0",
+                  },
+                  max: {
+                    value: 99999.99,
+                    message: "Capacidad debe ser menor o igual a 99999.99",
+                  },
+                })}
+                className={
+                  "form-control " + (errors?.Capacidad ? "is-invalid" : "")
+                }
+              />
+              <div className="invalid-feedback">{errors?.Capacidad?.message}</div>
+            </div>
+          </div>
+
+
+          {/* campo FechaInauguracion */}
+          <div className="row">
+            <div className="col-sm-4 col-md-3 offset-md-1">
+              <label className="col-form-label" htmlFor="FechaInauguracion">
+                Fecha Inauguracion<span className="text-danger">*</span>:
               </label>
             </div>
             <div className="col-sm-8 col-md-6">
               <input
                 type="date"
-                {...register("FechaFundacion", {
-                  required: { value: true, message: "Fecha Fundacion es requerido" }
+                {...register("FechaInauguracion", {
+                  required: { value: true, message: "Fecha Inauguracion es requerido" }
                 })}
                 className={
-                  "form-control " + (errors?.FechaFundacion ? "is-invalid" : "")
+                  "form-control " + (errors?.FechaInauguracion ? "is-invalid" : "")
                 }
               />
               <div className="invalid-feedback">
-                {errors?.FechaFundacion?.message}
+                {errors?.FechaInauguracion?.message}
               </div>
             </div>
           </div>
 
-          {/* campo IdLiga */}
+          {/* campo IdProvincia */}
           <div className="row">
             <div className="col-sm-4 col-md-3 offset-md-1">
-              <label className="col-form-label" htmlFor="IdLiga">
-                Liga<span className="text-danger">*</span>:
+              <label className="col-form-label" htmlFor="IdProvincia">
+                Provincia<span className="text-danger">*</span>:
               </label>
             </div>
             <div className="col-sm-8 col-md-6">
               <select
-                {...register("IdLiga", {
-                  required: { value: true, message: "Liga es requerido" },
+                {...register("IdProvincia", {
+                  required: { value: true, message: "Provincia es requerido" },
                 })}
                 className={
                   "form-control " +
-                  (errors?.IdLiga ? "is-invalid" : "")
+                  (errors?.IdProvincia ? "is-invalid" : "")
                 }
               >
                 <option value="" key={1}></option>
-                {Ligas?.map((x) => (
-                  <option value={x.IdLiga} key={x.IdLiga}>
+                {Provincias?.map((x) => (
+                  <option value={x.IdProvincia} key={x.IdProvincia}>
                     {x.Nombre}
                   </option>
                 ))}
               </select>
               <div className="invalid-feedback">
-                {errors?.IdLiga?.message}
+                {errors?.IdProvincia?.message}
               </div>
             </div>
           </div>
+
                     {/* campo Abono */}
                     <div className="row">
             <div className="col-sm-4 col-md-3 offset-md-1">
@@ -140,22 +170,21 @@ export default function ClubesRegistro({
             </div>
           </div>
 
-
-          {/* campo Abierto */}
+          {/* campo Activo */}
           <div className="row">
             <div className="col-sm-4 col-md-3 offset-md-1">
-              <label className="col-form-label" htmlFor="Abierto">
-                Abierto<span className="text-danger">*</span>:
+              <label className="col-form-label" htmlFor="Activo">
+                Activo<span className="text-danger">*</span>:
               </label>
             </div>
             <div className="col-sm-8 col-md-6">
               <select
-                name="Abierto"
-                {...register("Abierto", {
-                  required: { value: true, message: "Abierto es requerido" },
+                name="Activo"
+                {...register("Activo", {
+                  required: { value: true, message: "Activo es requerido" },
                 })}
                 className={
-                  "form-control" + (errors?.Abierto ? " is-invalid" : "")
+                  "form-control" + (errors?.Activo ? " is-invalid" : "")
                 }
                 disabled
               >
@@ -163,7 +192,7 @@ export default function ClubesRegistro({
                 <option value={false}>NO</option>
                 <option value={true}>SI</option>
               </select>
-              <div className="invalid-feedback">{errors?.Abierto?.message}</div>
+              <div className="invalid-feedback">{errors?.Activo?.message}</div>
             </div>
           </div>
 

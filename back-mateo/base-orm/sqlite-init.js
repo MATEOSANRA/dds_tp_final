@@ -69,7 +69,7 @@ async function CrearBaseSiNoExiste() {
     await db.run(
       `CREATE TABLE clubes (IdClub INTEGER PRIMARY KEY AUTOINCREMENT, 
         Nombre TEXT NOT NULL UNIQUE,
-        FechaFundacion TEXT,
+        FechaFundacion STRING,
         IdLiga INTEGER,
         Abono real,
         Abierto boolean,
@@ -79,26 +79,26 @@ async function CrearBaseSiNoExiste() {
     await db.run(
       // Insertamos clubes en la tabla clubes
       `INSERT INTO clubes VALUES
-       (1, "River Plate", "05-25-1901", 1, 25000.00, 1),
-       (2, "Boca Juniors", "04-03-1905", 1, 28000.00, 1),
-       (3, "Independiente", "01-01-1905", 1, 22000.00, 1),
-       (4, "Racing Club", "03-25-1903", 1, 21000.00, 1),
-       (5, "San Lorenzo de Almagro", "07-01-1908", 1, 18000.00, 1),
-       (6, "Vélez Sarsfield", "08-06-1913", 1, 17000.00, 1),
-       (7, "Estudiantes de La Plata", "08-04-1905", 1, 16000.00, 1),
-       (8, "Gimnasia y Esgrima La Plata", "06-03-1887", 1, 15000.00, 1),
-       (9, "Newell's Old Boys", "08-03-1905", 1, 14000.00, 1),
-       (10, "Rosario Central", "12-27-1889", 1, 13000.00, 1),
-       (11, "Olimpo de Bahía Blanca", "02-20-1912", 2, 12000.00, 1),
-       (12, "Agropecuario Argentino", "11-11-1989", 2, 11000.00, 1),
-       (13, "Deportivo Madryn", "06-22-1979", 2, 10000.00, 1),
-       (14, "Atlético San Martín de San Juan", "05-25-1908", 3, 9000.00, 1),
-       (15, "Estudiantes de Río Cuarto", "01-11-1911", 3, 8000.00, 1),
-       (16, "Gimnasia y Esgrima Mendoza", "09-18-1907", 3, 7000.00, 1),
-       (17, "Independiente Chivilcoy", "02-22-1922", 4, 6000.00, 1),
-       (18, "Sportivo Patria", "08-28-1923", 4, 5000.00, 1),
-       (19, "Deportivo Español", "06-03-1898", 5, 4000.00, 0),
-       (20, "Club Atlético Alumni", "01-01-1891", 5, 3000.00, 0);`
+       (1, "River Plate", "1901-05-25", 1, 25000.00, 1),
+       (2, "Boca Juniors", "1905-04-03", 1, 28000.00, 1),
+       (3, "Independiente", "1905-01-01", 1, 22000.00, 1),
+       (4, "Racing Club", "1903-03-25", 1, 21000.00, 1),
+       (5, "San Lorenzo de Almagro", "1908-07-01", 1, 18000.00, 1),
+       (6, "Vélez Sarsfield", "1913-08-06", 1, 17000.00, 1),
+       (7, "Estudiantes de La Plata", "1905-08-04", 1, 16000.00, 1),
+       (8, "Gimnasia y Esgrima La Plata", "1887-06-03", 1, 15000.00, 1),
+       (9, "Newell's Old Boys", "1905-08-03", 1, 14000.00, 1),
+       (10, "Rosario Central", "1889-12-27", 1, 13000.00, 1),
+       (11, "Olimpo de Bahía Blanca", "1912-02-20", 2, 12000.00, 1),
+       (12, "Agropecuario Argentino", "1989-11-11", 2, 11000.00, 1),
+       (13, "Deportivo Madryn", "1979-06-22", 2, 10000.00, 1),
+       (14, "Atlético San Martín de San Juan", "1908-05-25", 3, 9000.00, 1),
+       (15, "Estudiantes de Río Cuarto", "1911-01-1", 3, 8000.00, 1),
+       (16, "Gimnasia y Esgrima Mendoza", "1907-09-18", 3, 7000.00, 1),
+       (17, "Independiente Chivilcoy", "1922-02-22", 4, 6000.00, 1),
+       (18, "Sportivo Patria", "1923-08-28", 4, 5000.00, 1),
+       (19, "Deportivo Español", "1898-06-03", 5, 4000.00, 0),
+       (20, "Club Atlético Alumni", "1891-01-01", 5, 3000.00, 0);`
     );
   }
 
@@ -143,7 +143,7 @@ async function CrearBaseSiNoExiste() {
     await db.run(
       `CREATE TABLE jugadores (IdJugador INTEGER PRIMARY KEY AUTOINCREMENT, 
         Nombre TEXT NOT NULL UNIQUE,
-        FechaNacimiento TEXT,
+        FechaNacimiento STRING,
         IdPosicion INTEGER,
         Retirado boolean,
         FOREIGN KEY (IdPosicion) REFERENCES posiciones(IdPosicion));`
@@ -151,26 +151,26 @@ async function CrearBaseSiNoExiste() {
     console.log('Tabla jugadores creada');
     await db.run(
       `INSERT INTO jugadores VALUES
-       (1, 'Lionel Messi', '06/24/1987', 3, 1),
-       (2, 'Diego Maradona', '10/30/1960', 2, 0),
-       (3, 'Gabriel Batistuta', '06/01/1969', 3, 0),
-       (4, 'Sergio Agüero', '06/02/1988', 3, 0),
-       (5, 'Juan Román Riquelme', '06/24/1978', 2, 0),
-       (6, 'Javier Zanetti', '08/19/1973', 1, 0),
-       (7, 'Daniel Passarella', '05/16/1953', 1, 0),
-       (8, 'Roberto Ayala', '03/14/1973', 1, 0),
-       (9, 'Oscar Ruggeri', '01/30/1962', 1, 0),
-       (10, 'Mario Kempes', '07/05/1954', 3, 0),
-       (11, 'Ángel Di María', '05/31/1988', 2, 1),
-       (12, 'Paulo Dybala', '11/21/1995', 3, 1),
-       (13, 'Leandro Paredes', '06/29/1994', 2, 1),
-       (14, 'Rodrigo De Paul', '05/24/1994', 2, 1),
-       (15, 'Lautaro Martínez', '03/22/1997', 3, 1),
-       (16, 'Julián Álvarez', '01/31/2000', 3, 1),
-       (17, 'Lisandro Martínez', '01/24/1998', 1, 1),
-       (18, 'Cristian Romero', '03/27/2000', 1, 1),
-       (19, 'Germán Pezzella', '11/10/1991', 1, 1),
-       (20, 'Emiliano Martínez', '01/02/1992', 0, 1);`
+       (1, 'Lionel Messi', '1987-06-24', 3, 1),
+       (2, 'Diego Maradona', '1960-10-30', 2, 0),
+       (3, 'Gabriel Batistuta', '1969-06-01', 3, 0),
+       (4, 'Sergio Agüero', '1988-06-02', 3, 0),
+       (5, 'Juan Román Riquelme', '1978-06-24', 2, 0),
+       (6, 'Javier Zanetti', '1973-08-19', 1, 0),
+       (7, 'Daniel Passarella', '1953-05-16', 1, 0),
+       (8, 'Roberto Ayala', '1973-03-14', 1, 0),
+       (9, 'Oscar Ruggeri', '1962-01-30', 1, 0),
+       (10, 'Mario Kempes', '1954-07-05', 3, 0),
+       (11, 'Ángel Di María', '1988-05-31', 2, 1),
+       (12, 'Paulo Dybala', '1995-11-21', 3, 1),
+       (13, 'Leandro Paredes', '1994-06-29', 2, 1),
+       (14, 'Rodrigo De Paul', '1994-05-24', 2, 1),
+       (15, 'Lautaro Martínez', '1997-03-22', 3, 1),
+       (16, 'Julián Álvarez', '2000-01-31', 3, 1),
+       (17, 'Lisandro Martínez', '1998-01-24', 1, 1),
+       (18, 'Cristian Romero', '2000-03-27', 1, 1),
+       (19, 'Germán Pezzella', '1991-11-10', 1, 1),
+       (20, 'Emiliano Martínez', '1992-01-02', 0, 1);`
     );
   }
 
